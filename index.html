@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision Point - Ledger</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans pb-10">
+
+    <div class="bg-blue-800 text-white p-8 text-center rounded-b-[40px] shadow-lg">
+        <h1 class="text-3xl font-black italic">VISION POINT</h1>
+        <p class="text-xs opacity-80 mt-1">Nexa AI Digital Solutions</p>
+    </div>
+
+    <div class="flex gap-4 p-5 -mt-6">
+        <div class="bg-white flex-1 p-4 rounded-2xl shadow text-center">
+            <p class="text-[10px] text-gray-400 font-bold uppercase">Today's Sale</p>
+            <p id="totalAmount" class="text-xl font-bold text-blue-800">₹0</p>
+        </div>
+        <div class="bg-white flex-1 p-4 rounded-2xl shadow text-center">
+            <p class="text-[10px] text-gray-400 font-bold uppercase">Customers</p>
+            <p id="totalCount" class="text-xl font-bold text-blue-800">0</p>
+        </div>
+    </div>
+
+    <div class="p-5">
+        <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+            <h3 class="font-bold text-gray-700 mb-4">New Vision Record</h3>
+            <input id="name" type="text" placeholder="Customer Name" class="w-full p-3 bg-gray-50 rounded-xl mb-3 outline-none border">
+            
+            <div class="flex gap-2 mb-3">
+                <input id="re" type="text" placeholder="RE Power" class="w-1/2 p-3 bg-gray-50 rounded-xl border">
+                <input id="le" type="text" placeholder="LE Power" class="w-1/2 p-3 bg-gray-50 rounded-xl border">
+            </div>
+            
+            <input id="price" type="number" placeholder="Amount (₹)" class="w-full p-3 bg-gray-50 rounded-xl mb-5 border font-bold">
+            
+            <button onclick="saveData()" class="w-full bg-blue-700 text-white p-4 rounded-xl font-bold shadow-blue-200 shadow-lg active:scale-95 transition">
+                SAVE ENTRY
+            </button>
+        </div>
+    </div>
+
+    <div class="px-5 mt-5">
+        <h2 class="font-bold text-gray-800 mb-4 px-1">Recent History</h2>
+        <div id="recordList"></div>
+    </div>
+
+    <script>
+        let entries = JSON.parse(localStorage.getItem('visionRecords')) || [];
+
+        function updateUI() {
+            const list = document.getElementById('recordList');
+            const totalDisplay = document.getElementById('totalAmount');
+            const countDisplay = document.getElementById('totalCount');
+            
+            list.innerHTML = '';
+            let total = 0;
+
+            entries.forEach((item, index) => {
+                total += Number(item.amount);
+                list.innerHTML += `
+                    <div class="bg-white p-5 rounded-2xl mb-3 shadow-sm flex justify-between items-center border-l-4 border-blue-600">
+                        <div>
+                            <h4 class="font-bold text-gray-800">${item.name}</h4>
+                            <p class="text-[10px] text-blue-600 font-bold mt-1 uppercase">RE: ${item.re} | LE: ${item.le}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold text-blue-900">₹${item.amount}</p>
+                            <button onclick="sendWA('${item.name}', '${item.re}', '${item.le}', '${item.amount}')" class="text-green-500 text-xs font-bold mt-2">WhatsApp</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            totalDisplay.innerText = '₹' + total;
+            countDisplay.innerText = entries.length;
+        }
+
+        function saveData() {
+            const name = document.getElementById('name').value;
+            const re = document.getElementById('re').value;
+            const le = document.getElementById('le').value;
+            const price = document.getElementById('price').value;
+
+            if(!name || !price) return alert("Pura data bharein!");
+
+            const newEntry = { name, re, le, amount: price };
+            entries.unshift(newEntry);
+            localStorage.setItem('visionRecords', JSON.stringify(entries));
+            
+            // Clear inputs
+            document.getElementById('name').value = '';
+            document.getElementById('re').value = '';
+            document.getElementById('le').value = '';
+            document.getElementById('price').value = '';
+            
+            updateUI();
+        }
+
+        function sendWA(name, re, le, amount) {
+            const msg = `*VISION POINT*\n\nCustomer: ${name}\nPower: RE(${re}) LE(${le})\nTotal: ₹${amount}\n\nThank you!`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
+        }
+
+        updateUI();
+    </script>
+</body>
+  </html>
+  
