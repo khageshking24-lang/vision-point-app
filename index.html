@@ -9,7 +9,7 @@
         .dark { background-color: #111827; color: #f3f4f6; }
         .dark .bg-white { background-color: #1f2937; color: white; border-color: #374151; }
         .dark .text-gray-800 { color: #f9fafb; }
-        .dark input, .dark select { background-color: #374151; color: white; border-color: #4b5563; }
+        .dark input { background-color: #374151; color: white; border-color: #4b5563; }
         .dark .border-gray-100 { border-color: #374151; }
     </style>
 </head>
@@ -20,7 +20,7 @@
             <span id="themeIcon">🌙</span>
         </button>
         <h1 class="text-4xl font-black italic tracking-tighter uppercase">Vision Point</h1>
-        <p class="text-[10px] opacity-80 mt-1 tracking-[4px] font-bold">Nexa AI Digital Solutions</p>
+        <p class="text-[10px] opacity-80 mt-1 tracking-[4px] font-bold text-blue-100">Nexa AI Digital Solutions</p>
     </div>
 
     <div class="flex gap-4 p-6 -mt-8 relative z-10">
@@ -37,7 +37,7 @@
     <div class="px-6 mt-4">
         <div class="bg-white flex items-center px-4 py-3 rounded-2xl shadow-md border">
             <span class="mr-2">🔍</span>
-            <input id="searchInput" oninput="updateUI()" type="text" placeholder="Search customer name..." class="w-full bg-transparent outline-none text-sm font-medium">
+            <input id="searchInput" oninput="updateUI()" type="text" placeholder="Search name or phone..." class="w-full bg-transparent outline-none text-sm font-medium">
         </div>
     </div>
 
@@ -46,7 +46,8 @@
             <h3 class="font-black text-gray-700 mb-5 flex items-center gap-2">
                 <span class="text-blue-600">📝</span> New Entry
             </h3>
-            <input id="name" type="text" placeholder="Customer Name" class="w-full p-4 rounded-2xl mb-3 outline-none border focus:ring-2 ring-blue-500 transition">
+            <input id="name" type="text" placeholder="Customer Name" class="w-full p-4 rounded-2xl mb-3 outline-none border focus:ring-2 ring-blue-500">
+            <input id="phone" type="tel" placeholder="Phone Number (e.g. 98xxxxxx)" class="w-full p-4 rounded-2xl mb-3 outline-none border focus:ring-2 ring-blue-500">
             
             <div class="flex gap-3 mb-3">
                 <input id="re" type="text" placeholder="RE Power" class="w-1/2 p-4 rounded-2xl border">
@@ -55,7 +56,7 @@
             
             <input id="price" type="number" placeholder="Total Amount (₹)" class="w-full p-4 rounded-2xl mb-6 border font-black text-xl text-blue-800">
             
-            <button onclick="saveData()" class="w-full bg-blue-700 text-white p-5 rounded-2xl font-black shadow-2xl shadow-blue-200 active:scale-95 transition tracking-widest uppercase">
+            <button onclick="saveData()" class="w-full bg-blue-700 text-white p-5 rounded-2xl font-black shadow-2xl active:scale-95 transition uppercase tracking-widest">
                 Save Record
             </button>
         </div>
@@ -63,7 +64,7 @@
 
     <div class="px-6 pb-10">
         <h2 class="font-black text-gray-800 mb-4 flex justify-between items-center">
-            Recent Records <span class="text-xs font-bold text-blue-600 uppercase tracking-widest">Nexa AI Ledger</span>
+            Recent Records <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Nexa AI</span>
         </h2>
         <div id="recordList" class="space-y-4"></div>
     </div>
@@ -87,34 +88,30 @@
             list.innerHTML = '';
             let total = 0;
 
-            const filteredEntries = entries.filter(item => item.name.toLowerCase().includes(searchTerm));
-
-            if (filteredEntries.length === 0) {
-                list.innerHTML = '<p class="text-center text-gray-400 italic py-10 text-sm font-medium">No records found.</p>';
-            }
+            const filteredEntries = entries.filter(item => 
+                item.name.toLowerCase().includes(searchTerm) || 
+                (item.phone && item.phone.includes(searchTerm))
+            );
 
             filteredEntries.forEach((item, index) => {
                 total += Number(item.amount);
                 list.innerHTML += `
-                    <div class="bg-white p-6 rounded-[30px] shadow-md border-l-[6px] border-blue-600 transition duration-300">
+                    <div class="bg-white p-6 rounded-[30px] shadow-md border-l-[6px] border-blue-600">
                         <div class="flex justify-between items-start">
                             <div>
                                 <h4 class="font-black text-lg tracking-tight uppercase">${item.name}</h4>
+                                <p class="text-[11px] text-gray-400 font-bold">${item.phone || 'No Phone'}</p>
                                 <div class="bg-blue-50 dark:bg-gray-700 px-3 py-1 rounded-full mt-2 inline-block">
-                                    <p class="text-[10px] text-blue-600 font-black tracking-widest uppercase">RE: ${item.re} | LE: ${item.le}</p>
+                                    <p class="text-[10px] text-blue-600 font-black uppercase">RE: ${item.re} | LE: ${item.le}</p>
                                 </div>
                             </div>
-                            <div class="text-right">
-                                <p class="font-black text-2xl text-blue-900 dark:text-blue-400 tracking-tighter">₹${item.amount}</p>
-                            </div>
+                            <p class="font-black text-2xl text-blue-900 dark:text-blue-400 tracking-tighter">₹${item.amount}</p>
                         </div>
                         <div class="flex gap-4 mt-5 border-t pt-4 border-gray-50 dark:border-gray-700">
-                            <button onclick="sendWA('${item.name}', '${item.re}', '${item.le}', '${item.amount}')" class="flex-1 bg-green-500/10 text-green-600 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2">
-                                📱 WhatsApp
+                            <button onclick="sendWA('${item.phone}', '${item.name}', '${item.re}', '${item.le}', '${item.amount}')" class="flex-1 bg-green-500 text-white py-2 rounded-xl text-[10px] font-black uppercase flex items-center justify-center gap-2">
+                                📱 Send Bill
                             </button>
-                            <button onclick="deleteEntry(${index})" class="p-2 bg-red-50 dark:bg-red-900/10 text-red-500 rounded-xl">
-                                🗑️
-                            </button>
+                            <button onclick="deleteEntry(${index})" class="p-2 bg-red-50 text-red-500 rounded-xl">🗑️</button>
                         </div>
                     </div>
                 `;
@@ -126,17 +123,19 @@
 
         function saveData() {
             const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
             const re = document.getElementById('re').value;
             const le = document.getElementById('le').value;
             const price = document.getElementById('price').value;
 
-            if(!name || !price) return alert("Please enter Name and Amount!");
+            if(!name || !price) return alert("Customer name aur Amount bharna zaroori hai!");
 
-            const newEntry = { name, re, le, amount: price };
+            const newEntry = { name, phone, re, le, amount: price };
             entries.unshift(newEntry);
             localStorage.setItem('visionRecords', JSON.stringify(entries));
             
             document.getElementById('name').value = '';
+            document.getElementById('phone').value = '';
             document.getElementById('re').value = '';
             document.getElementById('le').value = '';
             document.getElementById('price').value = '';
@@ -145,20 +144,20 @@
         }
 
         function deleteEntry(index) {
-            if(confirm("Permanently delete this customer record?")) {
+            if(confirm("Permanently delete this customer?")) {
                 entries.splice(index, 1);
                 localStorage.setItem('visionRecords', JSON.stringify(entries));
                 updateUI();
             }
         }
 
-        function sendWA(name, re, le, amount) {
-            const msg = `*VISION POINT*\n\n*Name:* ${name}\n*RE Power:* ${re}\n*LE Power:* ${le}\n*Total:* ₹${amount}\n\n_Thank you for your trust!_`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
+        function sendWA(phone, name, re, le, amount) {
+            if(!phone) return alert("Is customer ka phone number save nahi hai!");
+            const msg = `*VISION POINT*\n\n*Customer:* ${name}\n*RE Power:* ${re}\n*LE Power:* ${le}\n*Total Bill:* ₹${amount}\n\n_Thank you for visiting!_`;
+            window.open(`https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`);
         }
 
         updateUI();
     </script>
 </body>
-        </html>
-        
+</html>
