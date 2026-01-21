@@ -1,163 +1,132 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vision Point - Ledger</title>
+    <title>VISION POINT | Khagesh AI Nexa</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .dark { background-color: #111827; color: #f3f4f6; }
-        .dark .bg-white { background-color: #1f2937; color: white; border-color: #374151; }
-        .dark .text-gray-800 { color: #f9fafb; }
-        .dark input { background-color: #374151; color: white; border-color: #4b5563; }
-        .dark .border-gray-100 { border-color: #374151; }
+        :root { --bg: #0f172a; --card: rgba(255,255,255,0.05); --text: white; }
+        .light-mode { --bg: #f8fafc; --card: white; --text: #1e293b; }
+        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; transition: 0.3s; }
+        .glass-card { background: var(--card); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        .nexa-gold { background: linear-gradient(45deg, #fbbf24, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .power-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 8px; }
+        input { font-size: 13px !important; }
     </style>
 </head>
-<body id="bodyTag" class="bg-gray-50 font-sans pb-20 transition-colors duration-300">
+<body class="p-4 max-w-md mx-auto pb-24">
 
-    <div class="bg-blue-700 text-white p-8 text-center rounded-b-[45px] shadow-2xl relative">
-        <button onclick="toggleDarkMode()" class="absolute top-5 right-5 bg-white/20 p-2 rounded-full backdrop-blur-sm">
-            <span id="themeIcon">🌙</span>
-        </button>
-        <h1 class="text-4xl font-black italic tracking-tighter uppercase">Vision Point</h1>
-        <p class="text-[10px] opacity-80 mt-1 tracking-[4px] font-bold text-blue-100">Nexa AI Digital Solutions</p>
-    </div>
-
-    <div class="flex gap-4 p-6 -mt-8 relative z-10">
-        <div class="bg-white flex-1 p-4 rounded-3xl shadow-xl border text-center">
-            <p class="text-[9px] text-gray-400 font-black uppercase tracking-widest">Today's Sale</p>
-            <p id="totalAmount" class="text-xl font-black text-blue-600">₹0</p>
+    <header class="flex justify-between items-center mb-6">
+        <div>
+            <h1 class="text-3xl font-black uppercase tracking-tighter nexa-gold">VISION POINT</h1>
+            <p class="text-[10px] font-bold opacity-60 tracking-[3px] uppercase">Khagesh AI Nexa Solutions</p>
         </div>
-        <div class="bg-white flex-1 p-4 rounded-3xl shadow-xl border text-center">
-            <p class="text-[9px] text-gray-400 font-black uppercase tracking-widest">Total Orders</p>
-            <p id="totalCount" class="text-xl font-black text-blue-600">0</p>
+        <button onclick="toggleTheme()" class="p-2 rounded-full glass-card"><i id="themeIcon" class="fas fa-moon"></i></button>
+    </header>
+
+    <div class="glass-card p-5 mb-8 border-t-4 border-emerald-500">
+        <h3 class="font-bold mb-4 flex items-center gap-2 text-emerald-400"><i class="fas fa-plus-circle"></i> New Entry</h3>
+        <input type="text" id="custName" placeholder="Customer Name" class="w-full p-3 mb-2 rounded-xl bg-black/20 border border-gray-700 outline-none">
+        <input type="tel" id="custPhone" placeholder="Mobile Number" class="w-full p-3 mb-4 rounded-xl bg-black/20 border border-gray-700 outline-none">
+        
+        <p class="text-[10px] font-bold mb-2 text-emerald-400 uppercase">Distance (Door)</p>
+        <div class="power-grid">
+            <input type="text" id="rd_s" placeholder="RE SPH" class="p-2 rounded-lg bg-emerald-900/10 border border-emerald-500/30 text-center">
+            <input type="text" id="rd_c" placeholder="RE CYL" class="p-2 rounded-lg bg-emerald-900/10 border border-emerald-500/30 text-center">
+            <input type="text" id="rd_a" placeholder="RE AXIS" class="p-2 rounded-lg bg-emerald-900/10 border border-emerald-500/30 text-center">
         </div>
+        <div class="power-grid mb-4">
+            <input type="text" id="ld_s" placeholder="LE SPH" class="p-2 rounded-lg bg-emerald-900/10 border border-emerald-500/30 text-center">
+            <input type="text" id="ld_c" placeholder="LE CYL" class="p-2 rounded-lg bg-emerald-900/10 border border-emerald-500/30 text-center">
+            <input type="text" id="ld_a" placeholder="LE AXIS" class="p-2 rounded-lg bg-emerald-900/10 border border-emerald-500/30 text-center">
+        </div>
+
+        <p class="text-[10px] font-bold mb-2 text-amber-400 uppercase">Reading (Paas)</p>
+        <div class="power-grid">
+            <input type="text" id="rr_s" placeholder="RE SPH" class="p-2 rounded-lg bg-amber-900/10 border border-amber-500/30 text-center">
+            <input type="text" id="rr_c" placeholder="RE CYL" class="p-2 rounded-lg bg-amber-900/10 border border-amber-500/30 text-center">
+            <input type="text" id="rr_a" placeholder="RE AXIS" class="p-2 rounded-lg bg-amber-900/10 border border-amber-500/30 text-center">
+        </div>
+        <div class="power-grid mb-4">
+            <input type="text" id="lr_s" placeholder="LE SPH" class="p-2 rounded-lg bg-amber-900/10 border border-amber-500/30 text-center">
+            <input type="text" id="lr_c" placeholder="LE CYL" class="p-2 rounded-lg bg-amber-900/10 border border-amber-500/30 text-center">
+            <input type="text" id="lr_a" placeholder="LE AXIS" class="p-2 rounded-lg bg-amber-900/10 border border-amber-500/30 text-center">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mb-4">
+            <input type="number" id="totalAmt" placeholder="Total ₹" class="p-3 rounded-xl bg-blue-900/10 border border-blue-500/30">
+            <input type="number" id="advAmt" placeholder="Advance ₹" class="p-3 rounded-xl bg-emerald-900/10 border border-emerald-500/30">
+        </div>
+
+        <textarea id="desc" placeholder="Notes (Frame/Lens)..." class="w-full p-3 mb-4 rounded-xl bg-black/20 border border-gray-700 h-16 text-sm"></textarea>
+        <button onclick="saveRecord()" class="w-full bg-emerald-600 font-bold py-4 rounded-2xl">SAVE RECORD</button>
     </div>
 
-    <div class="px-6 mt-4">
-        <div class="bg-white flex items-center px-4 py-3 rounded-2xl shadow-md border">
-            <span class="mr-2">🔍</span>
-            <input id="searchInput" oninput="updateUI()" type="text" placeholder="Search name or phone..." class="w-full bg-transparent outline-none text-sm font-medium">
-        </div>
-    </div>
+    <div id="recordsList" class="space-y-4"></div>
 
-    <div class="p-6">
-        <div class="bg-white p-6 rounded-[35px] shadow-lg border">
-            <h3 class="font-black text-gray-700 mb-5 flex items-center gap-2">
-                <span class="text-blue-600">📝</span> New Entry
-            </h3>
-            <input id="name" type="text" placeholder="Customer Name" class="w-full p-4 rounded-2xl mb-3 outline-none border focus:ring-2 ring-blue-500">
-            <input id="phone" type="tel" placeholder="Phone Number (e.g. 98xxxxxx)" class="w-full p-4 rounded-2xl mb-3 outline-none border focus:ring-2 ring-blue-500">
-            
-            <div class="flex gap-3 mb-3">
-                <input id="re" type="text" placeholder="RE Power" class="w-1/2 p-4 rounded-2xl border">
-                <input id="le" type="text" placeholder="LE Power" class="w-1/2 p-4 rounded-2xl border">
-            </div>
-            
-            <input id="price" type="number" placeholder="Total Amount (₹)" class="w-full p-4 rounded-2xl mb-6 border font-black text-xl text-blue-800">
-            
-            <button onclick="saveData()" class="w-full bg-blue-700 text-white p-5 rounded-2xl font-black shadow-2xl active:scale-95 transition uppercase tracking-widest">
-                Save Record
-            </button>
-        </div>
-    </div>
-
-    <div class="px-6 pb-10">
-        <h2 class="font-black text-gray-800 mb-4 flex justify-between items-center">
-            Recent Records <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">Nexa AI</span>
-        </h2>
-        <div id="recordList" class="space-y-4"></div>
-    </div>
+    <footer class="fixed bottom-0 left-0 w-full p-4 bg-black/90 text-center border-t border-white/10">
+        <p class="text-[10px] text-gray-400 tracking-widest uppercase">Powered by Khagesh AI Nexa</p>
+    </footer>
 
     <script>
-        let entries = JSON.parse(localStorage.getItem('visionRecords')) || [];
-        let isDark = false;
-
-        function toggleDarkMode() {
-            isDark = !isDark;
-            document.getElementById('bodyTag').classList.toggle('dark');
-            document.getElementById('themeIcon').innerText = isDark ? '☀️' : '🌙';
+        let records = JSON.parse(localStorage.getItem('nexaOpticalData')) || [];
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const icon = document.getElementById('themeIcon');
+            icon.className = document.body.classList.contains('light-mode') ? 'fas fa-sun' : 'fas fa-moon';
         }
-
-        function updateUI() {
-            const list = document.getElementById('recordList');
-            const totalDisplay = document.getElementById('totalAmount');
-            const countDisplay = document.getElementById('totalCount');
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
+        function render() {
+            const list = document.getElementById('recordsList');
             list.innerHTML = '';
-            let total = 0;
-
-            const filteredEntries = entries.filter(item => 
-                item.name.toLowerCase().includes(searchTerm) || 
-                (item.phone && item.phone.includes(searchTerm))
-            );
-
-            filteredEntries.forEach((item, index) => {
-                total += Number(item.amount);
-                list.innerHTML += `
-                    <div class="bg-white p-6 rounded-[30px] shadow-md border-l-[6px] border-blue-600">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h4 class="font-black text-lg tracking-tight uppercase">${item.name}</h4>
-                                <p class="text-[11px] text-gray-400 font-bold">${item.phone || 'No Phone'}</p>
-                                <div class="bg-blue-50 dark:bg-gray-700 px-3 py-1 rounded-full mt-2 inline-block">
-                                    <p class="text-[10px] text-blue-600 font-black uppercase">RE: ${item.re} | LE: ${item.le}</p>
-                                </div>
-                            </div>
-                            <p class="font-black text-2xl text-blue-900 dark:text-blue-400 tracking-tighter">₹${item.amount}</p>
-                        </div>
-                        <div class="flex gap-4 mt-5 border-t pt-4 border-gray-50 dark:border-gray-700">
-                            <button onclick="sendWA('${item.phone}', '${item.name}', '${item.re}', '${item.le}', '${item.amount}')" class="flex-1 bg-green-500 text-white py-2 rounded-xl text-[10px] font-black uppercase flex items-center justify-center gap-2">
-                                📱 Send Bill
-                            </button>
-                            <button onclick="deleteEntry(${index})" class="p-2 bg-red-50 text-red-500 rounded-xl">🗑️</button>
+            records.forEach((r, i) => {
+                const due = (r.total || 0) - (r.adv || 0);
+                const div = document.createElement('div');
+                div.className = "glass-card p-4";
+                div.innerHTML = `
+                    <div class="flex justify-between items-start mb-2">
+                        <div><p class="font-bold text-lg leading-tight">${r.name}</p><p class="text-[10px] opacity-50">${r.date}</p></div>
+                        <div class="flex gap-2">
+                            <button onclick="shareWA(${i})" class="text-emerald-400 p-2"><i class="fab fa-whatsapp text-xl"></i></button>
+                            <button onclick="deleteRec(${i})" class="text-red-400 p-2"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
+                    <div class="text-[10px] mb-2 bg-black/20 p-2 rounded">
+                        <div><b>D:</b> R:${r.rd_s}/${r.rd_c} L:${r.ld_s}/${r.ld_c}</div>
+                        <div><b>R:</b> R:${r.rr_s}/${r.rr_c} L:${r.lr_s}/${r.lr_c}</div>
+                    </div>
+                    <div class="flex justify-between text-xs font-bold mb-1">
+                        <span>Bill: ₹${r.total}</span><span class="text-red-400">Due: ₹${due}</span>
+                    </div>
                 `;
+                list.prepend(div);
             });
-
-            totalDisplay.innerText = '₹' + total;
-            countDisplay.innerText = entries.length;
+            localStorage.setItem('nexaOpticalData', JSON.stringify(records));
         }
-
-        function saveData() {
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const re = document.getElementById('re').value;
-            const le = document.getElementById('le').value;
-            const price = document.getElementById('price').value;
-
-            if(!name || !price) return alert("Customer name aur Amount bharna zaroori hai!");
-
-            const newEntry = { name, phone, re, le, amount: price };
-            entries.unshift(newEntry);
-            localStorage.setItem('visionRecords', JSON.stringify(entries));
-            
-            document.getElementById('name').value = '';
-            document.getElementById('phone').value = '';
-            document.getElementById('re').value = '';
-            document.getElementById('le').value = '';
-            document.getElementById('price').value = '';
-            
-            updateUI();
+        function saveRecord() {
+            const name = document.getElementById('custName').value;
+            if(!name) return alert("Enter Name");
+            records.push({
+                name, date: new Date().toLocaleDateString(),
+                rd_s: document.getElementById('rd_s').value, rd_c: document.getElementById('rd_c').value,
+                ld_s: document.getElementById('ld_s').value, ld_c: document.getElementById('ld_c').value,
+                rr_s: document.getElementById('rr_s').value, rr_c: document.getElementById('rr_c').value,
+                lr_s: document.getElementById('lr_s').value, lr_c: document.getElementById('lr_c').value,
+                total: document.getElementById('totalAmt').value, adv: document.getElementById('advAmt').value,
+                desc: document.getElementById('desc').value, phone: document.getElementById('custPhone').value
+            });
+            render();
+            document.querySelectorAll('input, textarea').forEach(el => el.value = '');
         }
-
-        function deleteEntry(index) {
-            if(confirm("Permanently delete this customer?")) {
-                entries.splice(index, 1);
-                localStorage.setItem('visionRecords', JSON.stringify(entries));
-                updateUI();
-            }
+        function shareWA(i) {
+            const r = records[i];
+            const msg = `*PRADEEP VERMA OPTICALS*%0A*Customer:* ${r.name}%0A---%0A*Distance:* R:${r.rd_s}/${r.rd_c} L:${r.ld_s}/${r.ld_c}%0A*Reading:* R:${r.rr_s}/${r.rr_c} L:${r.lr_s}/${r.lr_c}%0A*Due Amount:* ₹${r.total - r.adv}%0A---%0A*Powered by Khagesh AI Nexa*`;
+            window.open(`https://wa.me/${r.phone}?text=${msg}`);
         }
-
-        function sendWA(phone, name, re, le, amount) {
-            if(!phone) return alert("Is customer ka phone number save nahi hai!");
-            const msg = `*VISION POINT*\n\n*Customer:* ${name}\n*RE Power:* ${re}\n*LE Power:* ${le}\n*Total Bill:* ₹${amount}\n\n_Thank you for visiting!_`;
-            window.open(`https://wa.me/91${phone}?text=${encodeURIComponent(msg)}`);
-        }
-
-        updateUI();
+        function deleteRec(i) { if(confirm("Delete?")) { records.splice(i, 1); render(); } }
+        render();
     </script>
 </body>
-</html>
+                </html>
+                
