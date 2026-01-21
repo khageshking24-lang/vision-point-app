@@ -3,130 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VISION POINT | Khagesh AI Nexa</title>
+    <title>Vision Point | Khagesh ai-nexa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
-        :root { --bg: #0f172a; --card: rgba(255,255,255,0.05); --text: white; }
-        .light-mode { --bg: #f8fafc; --card: white; --text: #1e293b; }
-        body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', sans-serif; transition: 0.3s; }
-        .glass-card { background: var(--card); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-        .nexa-gold { background: linear-gradient(45deg, #fbbf24, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .power-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 8px; }
-        input { font-size: 13px !important; }
+        :root { --bg: #0f172a; --card: rgba(30, 41, 59, 0.7); --text: #ffffff; }
+        .light-mode { --bg: #fdfcfb; --card: #ffffff; --text: #1e293b; }
+        body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; transition: 0.4s; overflow-x: hidden; }
+        .glass { background: var(--card); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); border-radius: 28px; }
+        .input-mini { background: rgba(0,0,0,0.1); border-bottom: 2px solid #6366f1; font-size: 10px; padding: 4px; text-align: center; width: 100%; outline: none; }
+        .light-mode .input-mini { background: #f1f5f9; color: #1e293b; }
+        #qrcode img { margin: 0 auto; border: 10px solid white; border-radius: 12px; }
+        .brand-gradient { background: linear-gradient(90deg, #3b82f6, #8b5cf6); }
     </style>
 </head>
-<body class="p-4 max-w-md mx-auto pb-24">
+<body class="p-4 max-w-md mx-auto pb-44">
 
-    <header class="flex justify-between items-center mb-6">
-        <div>
-            <h1 class="text-3xl font-black uppercase tracking-tighter nexa-gold">VISION POINT</h1>
-            <p class="text-[10px] font-bold opacity-60 tracking-[3px] uppercase">Khagesh AI Nexa Solutions</p>
-        </div>
-        <button onclick="toggleTheme()" class="p-2 rounded-full glass-card"><i id="themeIcon" class="fas fa-moon"></i></button>
-    </header>
-
-    <div class="glass-card p-5 mb-8 border-t-4 border-emerald-500">
-        <h3 class="font-bold mb-4 flex items-center gap-2 text-emerald-400"><i class="fas fa-plus-circle"></i> New Entry</h3>
-        <input type="text" id="custName" placeholder="Customer Name" class="w-full p-3 mb-2 rounded-xl bg-black/20 border border-gray-700 outline-none">
-        <input type="tel" id="custPhone" placeholder="Mobile Number" class="w-full p-3 mb-4 rounded-xl bg-black/20 border border-gray-700 outline-none">
-        
-        <p class="text-[10px] font-bold mb-2 text-emerald-400 uppercase">Distance (Door)</p>
-        <div class="power-grid">
-            <input type="text" id="rd_s" placeholder="RE SPH" class="p-2 rounded-lg bg-emerald-900/10 border border-emerald-500/30 text-center">
-            <input type="text" id="rd_c" placeholder="RE CYL" class="p-2 rounded-lg bg-emerald-900/10 border border-emerald-500/30 text-center">
-            <input type="text" id="rd_a" placeholder="RE AXIS" class="p-2 rounded-lg bg-emerald-900/10 border border-emerald-500/30 text-center">
-        </div>
-        <div class="power-grid mb-4">
-            <input type="text" id="ld_s" placeholder="LE SPH" class="p-2 rounded-lg bg-emerald-900/10 border border-emerald-500/30 text-center">
-            <input type="text" id="ld_c" placeholder="LE CYL" class="p-2 rounded-lg bg-emerald-900/10 border border-emerald-500/30 text-center">
-            <input type="text" id="ld_a" placeholder="LE AXIS" class="p-2 rounded-lg bg-emerald-900/10 border border-emerald-500/30 text-center">
-        </div>
-
-        <p class="text-[10px] font-bold mb-2 text-amber-400 uppercase">Reading (Paas)</p>
-        <div class="power-grid">
-            <input type="text" id="rr_s" placeholder="RE SPH" class="p-2 rounded-lg bg-amber-900/10 border border-amber-500/30 text-center">
-            <input type="text" id="rr_c" placeholder="RE CYL" class="p-2 rounded-lg bg-amber-900/10 border border-amber-500/30 text-center">
-            <input type="text" id="rr_a" placeholder="RE AXIS" class="p-2 rounded-lg bg-amber-900/10 border border-amber-500/30 text-center">
-        </div>
-        <div class="power-grid mb-4">
-            <input type="text" id="lr_s" placeholder="LE SPH" class="p-2 rounded-lg bg-amber-900/10 border border-amber-500/30 text-center">
-            <input type="text" id="lr_c" placeholder="LE CYL" class="p-2 rounded-lg bg-amber-900/10 border border-amber-500/30 text-center">
-            <input type="text" id="lr_a" placeholder="LE AXIS" class="p-2 rounded-lg bg-amber-900/10 border border-amber-500/30 text-center">
-        </div>
-
-        <div class="grid grid-cols-2 gap-3 mb-4">
-            <input type="number" id="totalAmt" placeholder="Total ₹" class="p-3 rounded-xl bg-blue-900/10 border border-blue-500/30">
-            <input type="number" id="advAmt" placeholder="Advance ₹" class="p-3 rounded-xl bg-emerald-900/10 border border-emerald-500/30">
-        </div>
-
-        <textarea id="desc" placeholder="Notes (Frame/Lens)..." class="w-full p-3 mb-4 rounded-xl bg-black/20 border border-gray-700 h-16 text-sm"></textarea>
-        <button onclick="saveRecord()" class="w-full bg-emerald-600 font-bold py-4 rounded-2xl">SAVE RECORD</button>
+    <div class="flex justify-between items-center mb-6 pt-2">
+        <button onclick="toggleTheme()" class="bg-blue-600 text-white px-4 py-1 rounded-full text-[10px] font-black italic shadow-lg">THEME</button>
+        <div id="clock" class="text-xs font-bold opacity-40 italic">00:00:00</div>
+        <button onclick="exportData()" class="bg-slate-700 text-white px-4 py-1 rounded-full text-[10px] font-black">BACKUP</button>
     </div>
 
-    <div id="recordsList" class="space-y-4"></div>
+    <div class="text-center mb-6">
+        <div class="inline-block brand-gradient px-6 py-1 rounded-full mb-3 shadow-xl">
+            <p class="text-[9px] font-black text-white uppercase tracking-[3px]">Official App: Vision Point</p>
+        </div>
+        <h1 class="text-4xl font-black italic tracking-tighter text-blue-500">NEXA <span class="text-inherit opacity-80">VISION</span></h1>
+        <p class="text-[7px] font-bold opacity-40 uppercase tracking-[4px] mt-1">Innovation by Khagesh ai-nexa</p>
+    </div>
 
-    <footer class="fixed bottom-0 left-0 w-full p-4 bg-black/90 text-center border-t border-white/10">
-        <p class="text-[10px] text-gray-400 tracking-widest uppercase">Powered by Khagesh AI Nexa</p>
+    <div class="glass p-5 mb-8 border-t-4 border-blue-600 shadow-2xl">
+        <div class="space-y-4">
+            <div class="grid grid-cols-2 gap-3">
+                <input type="text" id="pName" placeholder="Patient Name" class="p-3 rounded-xl bg-black/10 border border-white/5 outline-none text-sm font-bold">
+                <input type="tel" id="pPhone" placeholder="Mobile No." class="p-3 rounded-xl bg-black/10 border border-white/5 outline-none text-sm font-bold">
+            </div>
+
+            <div class="bg-blue-500/5 p-4 rounded-2xl border border-blue-500/10">
+                <div class="grid grid-cols-5 gap-2 text-[8px] font-black text-blue-500 uppercase mb-2 text-center">
+                    <div>EYE</div><div>SPH</div><div>CYL</div><div>AXIS</div><div>ADD</div>
+                </div>
+                <div class="grid grid-cols-5 gap-2 mb-3 items-center">
+                    <div class="text-[10px] font-bold text-center">RE</div>
+                    <input type="text" id="reSph" class="input-mini" placeholder="0.00">
+                    <input type="text" id="reCyl" class="input-mini" placeholder="0.00">
+                    <input type="text" id="reAxis" class="input-mini" placeholder="0">
+                    <input type="text" id="reAdd" class="input-mini" placeholder="0.00">
+                </div>
+                <div class="grid grid-cols-5 gap-2 items-center">
+                    <div class="text-[10px] font-bold text-center">LE</div>
+                    <input type="text" id="leSph" class="input-mini" placeholder="0.00">
+                    <input type="text" id="leCyl" class="input-mini" placeholder="0.00">
+                    <input type="text" id="leAxis" class="input-mini" placeholder="0">
+                    <input type="text" id="leAdd" class="input-mini" placeholder="0.00">
+                </div>
+            </div>
+
+            <textarea id="pNotes" placeholder="Frame / Lens Details (Progressive, Blue-Cut etc.)" class="w-full p-3 rounded-xl bg-black/10 border border-white/5 text-xs h-12 outline-none"></textarea>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <input type="number" id="pFees" placeholder="Total Bill ₹" class="p-3 rounded-xl bg-black/10 border border-white/5 font-black text-emerald-500">
+                <button onclick="saveRecord()" class="bg-blue-600 text-white font-black rounded-xl uppercase text-[10px] tracking-widest shadow-lg shadow-blue-500/20">Save & Bill</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="patientList" class="space-y-4"></div>
+
+    <div id="qrModal" class="fixed inset-0 bg-black/95 hidden z-50 flex items-center justify-center p-6">
+        <div class="bg-white p-8 rounded-[40px] text-center w-full">
+            <div id="qrcode" class="mb-4"></div>
+            <p class="text-black font-black italic text-sm">Vision Point Opticals</p>
+            <p class="text-slate-400 text-[8px] mb-6 tracking-widest uppercase">Verified Digital Prescription</p>
+            <button onclick="closeQR()" class="bg-blue-600 text-white px-10 py-3 rounded-2xl font-black text-[10px]">CLOSE</button>
+        </div>
+    </div>
+
+    <footer class="fixed bottom-0 left-0 w-full p-6 bg-inherit backdrop-blur-md text-center border-t border-white/5">
+        <h2 class="text-lg font-black italic opacity-80">Khagesh <span class="text-blue-500">ai-nexa</span></h2>
+        <p class="text-[7px] font-bold opacity-30 tracking-[4px] uppercase mt-1 italic">Vision Point Digital Suite</p>
     </footer>
 
     <script>
-        let records = JSON.parse(localStorage.getItem('nexaOpticalData')) || [];
-        function toggleTheme() {
-            document.body.classList.toggle('light-mode');
-            const icon = document.getElementById('themeIcon');
-            icon.className = document.body.classList.contains('light-mode') ? 'fas fa-sun' : 'fas fa-moon';
+        function updateClock() { document.getElementById('clock').innerText = new Date().toLocaleTimeString('en-IN', {hour12: false}); }
+        setInterval(updateClock, 1000); updateClock();
+
+        let records = JSON.parse(localStorage.getItem('nexa_vision_point_v1')) || [];
+
+        function saveRecord() {
+            const name = document.getElementById('pName').value;
+            const phone = document.getElementById('pPhone').value;
+            if(!name || !phone) return alert("Please fill Name & Phone!");
+
+            const rec = {
+                id: Date.now(), name, phone,
+                re: { sph: document.getElementById('reSph').value, cyl: document.getElementById('reCyl').value, axis: document.getElementById('reAxis').value, add: document.getElementById('reAdd').value },
+                le: { sph: document.getElementById('leSph').value, cyl: document.getElementById('leCyl').value, axis: document.getElementById('leAxis').value, add: document.getElementById('leAdd').value },
+                notes: document.getElementById('pNotes').value,
+                fees: document.getElementById('pFees').value || '0',
+                date: new Date().toLocaleDateString('en-IN')
+            };
+
+            records.unshift(rec);
+            localStorage.setItem('nexa_vision_point_v1', JSON.stringify(records));
+            render();
+            ['pName', 'pPhone', 'reSph', 'reCyl', 'reAxis', 'reAdd', 'leSph', 'leCyl', 'leAxis', 'leAdd', 'pNotes', 'pFees'].forEach(id => document.getElementById(id).value = '');
         }
+
         function render() {
-            const list = document.getElementById('recordsList');
+            const list = document.getElementById('patientList');
             list.innerHTML = '';
-            records.forEach((r, i) => {
-                const due = (r.total || 0) - (r.adv || 0);
-                const div = document.createElement('div');
-                div.className = "glass-card p-4";
-                div.innerHTML = `
-                    <div class="flex justify-between items-start mb-2">
-                        <div><p class="font-bold text-lg leading-tight">${r.name}</p><p class="text-[10px] opacity-50">${r.date}</p></div>
+            records.forEach(r => {
+                const card = document.createElement('div');
+                card.className = "glass p-5 border-l-4 border-blue-600 mb-4";
+                card.innerHTML = `
+                    <div class="flex justify-between items-start mb-3">
+                        <div><h5 class="font-bold text-md">${r.name}</h5><p class="text-[8px] opacity-40 font-black">${r.date}</p></div>
                         <div class="flex gap-2">
-                            <button onclick="shareWA(${i})" class="text-emerald-400 p-2"><i class="fab fa-whatsapp text-xl"></i></button>
-                            <button onclick="deleteRec(${i})" class="text-red-400 p-2"><i class="fas fa-trash"></i></button>
+                            <button onclick="generateQR(${r.id})" class="text-blue-400 p-2 bg-blue-500/10 rounded-lg text-xs"><i class="fas fa-qrcode"></i></button>
+                            <button onclick="shareWA(${r.id})" class="text-emerald-500 p-2 bg-emerald-500/10 rounded-lg text-xs"><i class="fab fa-whatsapp"></i></button>
+                            <button onclick="deleteRec(${r.id})" class="text-rose-500 opacity-30 p-2"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
-                    <div class="text-[10px] mb-2 bg-black/20 p-2 rounded">
-                        <div><b>D:</b> R:${r.rd_s}/${r.rd_c} L:${r.ld_s}/${r.ld_c}</div>
-                        <div><b>R:</b> R:${r.rr_s}/${r.rr_c} L:${r.lr_s}/${r.lr_c}</div>
+                    <div class="bg-blue-500/5 p-2 rounded-xl text-[9px] mb-2 font-mono">
+                        <div class="grid grid-cols-5 text-blue-400 font-black mb-1 text-center"><div>EYE</div><div>SPH</div><div>CYL</div><div>AXIS</div><div>ADD</div></div>
+                        <div class="grid grid-cols-5 text-center"><div>RE</div><div>${r.re.sph}</div><div>${r.re.cyl}</div><div>${r.re.axis}</div><div>${r.re.add}</div></div>
+                        <div class="grid grid-cols-5 text-center"><div>LE</div><div>${r.le.sph}</div><div>${r.le.cyl}</div><div>${r.le.axis}</div><div>${r.le.add}</div></div>
                     </div>
-                    <div class="flex justify-between text-xs font-bold mb-1">
-                        <span>Bill: ₹${r.total}</span><span class="text-red-400">Due: ₹${due}</span>
+                    <div class="flex justify-between items-center text-[10px] font-black">
+                        <span class="text-emerald-500">₹${r.fees}</span>
+                        <span class="opacity-30 italic tracking-widest">VISION POINT</span>
                     </div>
                 `;
-                list.prepend(div);
+                list.appendChild(card);
             });
-            localStorage.setItem('nexaOpticalData', JSON.stringify(records));
         }
-        function saveRecord() {
-            const name = document.getElementById('custName').value;
-            if(!name) return alert("Enter Name");
-            records.push({
-                name, date: new Date().toLocaleDateString(),
-                rd_s: document.getElementById('rd_s').value, rd_c: document.getElementById('rd_c').value,
-                ld_s: document.getElementById('ld_s').value, ld_c: document.getElementById('ld_c').value,
-                rr_s: document.getElementById('rr_s').value, rr_c: document.getElementById('rr_c').value,
-                lr_s: document.getElementById('lr_s').value, lr_c: document.getElementById('lr_c').value,
-                total: document.getElementById('totalAmt').value, adv: document.getElementById('advAmt').value,
-                desc: document.getElementById('desc').value, phone: document.getElementById('custPhone').value
+
+        function toggleTheme() { document.body.classList.toggle('light-mode'); }
+
+        function generateQR(id) {
+            const r = records.find(x => x.id === id);
+            document.getElementById('qrcode').innerHTML = '';
+            new QRCode(document.getElementById('qrcode'), { 
+                text: `Vision Point | Patient: ${r.name}\nRE: S:${r.re.sph} C:${r.re.cyl} A:${r.re.axis} Ad:${r.re.add}\nLE: S:${r.le.sph} C:${r.le.cyl} A:${r.le.axis} Ad:${r.le.add}\nBill: ₹${r.fees}`, 
+                width: 200, height: 200 
             });
-            render();
-            document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+            document.getElementById('qrModal').classList.remove('hidden');
         }
-        function shareWA(i) {
-            const r = records[i];
-            const msg = `*PRADEEP VERMA OPTICALS*%0A*Customer:* ${r.name}%0A---%0A*Distance:* R:${r.rd_s}/${r.rd_c} L:${r.ld_s}/${r.ld_c}%0A*Reading:* R:${r.rr_s}/${r.rr_c} L:${r.lr_s}/${r.lr_c}%0A*Due Amount:* ₹${r.total - r.adv}%0A---%0A*Powered by Khagesh AI Nexa*`;
-            window.open(`https://wa.me/${r.phone}?text=${msg}`);
+
+        function closeQR() { document.getElementById('qrModal').classList.add('hidden'); }
+
+        function shareWA(id) {
+            const r = records.find(x => x.id === id);
+            const msg = `*VISION POINT OPTICALS*%0A*Patient:* ${r.name}%0A*RE:* S:${r.re.sph} C:${r.re.cyl} A:${r.re.axis} Add:${r.re.add}%0A*LE:* S:${r.le.sph} C:${r.le.cyl} A:${r.le.axis} Add:${r.le.add}%0A*Bill:* ₹${r.fees}%0A_Khagesh ai-nexa_`;
+            window.open(`https://wa.me/91${r.phone}?text=${msg}`);
         }
-        function deleteRec(i) { if(confirm("Delete?")) { records.splice(i, 1); render(); } }
+
+        function exportData() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(records));
+            const dl = document.createElement('a');
+            dl.setAttribute("href", dataStr);
+            dl.setAttribute("download", "vision_point_backup.json");
+            dl.click();
+        }
+
+        function deleteRec(id) {
+            if(confirm("Delete record?")) {
+                records = records.filter(r => r.id !== id);
+                localStorage.setItem('nexa_vision_point_v1', JSON.stringify(records));
+                render();
+            }
+        }
         render();
     </script>
 </body>
-                </html>
-                
+</html>
